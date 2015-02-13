@@ -15,7 +15,10 @@
         "knownVariants": "agave://data.iplantcollaborative.org/shared/iastate-tacc-genomics/Bos_taurus.dbSNP.vcf"
     },
     "parameters": {
-        "regionName": ""
+    	"regionName":"Chr7"
+    	"runUnifiedGenotyper": true,
+    	"runPlatypus": true,
+    	"runMpileup": true,
     },
     "outputs": {
     }
