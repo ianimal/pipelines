@@ -1,0 +1,22 @@
+{
+    "jobName": "savrp-010-01",
+    "softwareName": "jcarson-savrp-0.1.0",
+    "processorsPerNode": 16,
+    "requestedTime": "10:00:00",
+    "memoryPerNode": 32,
+    "nodeCount": 1,
+    "batchQueue": "serial",
+    "archive": false,
+    "archivePath": "",
+    "inputs": {
+        "inputBam": "agave://data.iplantcollaborative.org/shared/iastate-tacc-genomics/test-data/66522_d.bam",
+        "inputBamBai": "agave://data.iplantcollaborative.org/shared/iastate-tacc-genomics/test-data/66522_d.bam.bai",
+        "referenceBundle": "agave://data.iplantcollaborative.org/shared/iastate-tacc-genomics/umd_3_1_Y_Mito.tar",
+        "knownVariants": "agave://data.iplantcollaborative.org/shared/iastate-tacc-genomics/Bos_taurus.dbSNP.vcf"
+    },
+    "parameters": {
+        "regionName": "Chr2"
+    },
+    "outputs": {
+    }
+}
