@@ -277,4 +277,3 @@ function GATKpipeline () {
 	RIGHT_NOW=$(date +"%s")
 	echo "ENDING: $FUNCNAME " ${RIGHT_NOW} >> ${runTimeLog}
 }
-GATKpipeline

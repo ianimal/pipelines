@@ -36,6 +36,7 @@ else
 fi
 
 # The string defining the region (location) of the bam file to analyze - optional
+echo "Region is ${regionName}"
 location=${regionName}
 if [ "${location}" = "" ]; then 
 	gatk_region_arg=""; 
@@ -48,8 +49,11 @@ else
 fi
 
 run_unifiedgenotyper=${runUnifiedGenotyper}
-run_mpileup=${runMpileup}
 run_platypus=${runPlatypus}
+run_mpileup=${runMpileup}
+
+echo ${runUnifiedGenotyper},${runPlatypus},${runMpileup}
+echo $run_unifiedgenotyper, $run_platypus, $run_mpileup
 
 #---------------------------------------------
 # DIRECTORIES
@@ -128,6 +132,7 @@ function GATKpipeline () {
 		RIGHT_NOW=$(date +"%s")
 		echo "ENDING: $FUNCNAME " ${RIGHT_NOW} >> ${runTimeLog}
 	}
+	echo "Region is ${region}. If region specified, will run extractRegion"
 	if [ "${region}" != "" ]; then extractRegion; fi
 
 	function RealignerTargetCreator () {
@@ -147,6 +152,7 @@ function GATKpipeline () {
 		RIGHT_NOW=$(date +"%s")
 		echo "ENDING: $FUNCNAME" ${RIGHT_NOW} >> ${runTimeLog}
 	}
+	echo "Will run RealignerTargetCreator"
 	RealignerTargetCreator
 
 	function IndelRealigner () {
@@ -169,6 +175,7 @@ function GATKpipeline () {
 		RIGHT_NOW=$(date +"%s")
 		echo "ENDING: $FUNCNAME" ${RIGHT_NOW} >> ${runTimeLog}
 	}
+	echo "Will run IndelRealigner"
 	IndelRealigner
 
 	function BaseRecalibrator () {
@@ -218,7 +225,8 @@ function GATKpipeline () {
 		RIGHT_NOW=$(date +"%s")
 		echo "ENDING: $FUNCNAME Part 3" ${RIGHT_NOW} >> ${runTimeLog}
 	}
-	if $run_recalibrator; then BaseRecalibrator; fi 
+	echo "run_recalibrator is set to ${run_recalibrator}.  If true, then will run BaseRecalibrator"
+	if ${run_recalibrator}; then BaseRecalibrator; fi 
 
 	function UnifiedGenotyper () {
 		RIGHT_NOW=$(date +"%s")
@@ -240,18 +248,20 @@ function GATKpipeline () {
 		RIGHT_NOW=$(date +"%s")
 		echo "ENDING: $FUNCNAME" ${RIGHT_NOW} >> ${runTimeLog}
 	}
-	if $run_unifiedgenotyper; then UnifiedGenotyper; fi
+	echo "run_unifiedgenotyper is ${run_unifiedgenotyper}"
+	if [ ${run_unifiedgenotyper} = 1 ]; then echo "Running UnifiedGenotyper"; UnifiedGenotyper; else echo "Not running UnifiedGenotyper"; fi
 
-	function platypus () {
+	function PlatypusCallVariants () {
 		RIGHT_NOW=$(date +"%s")
 		echo "BEGINNING: $FUNCNAME 3rd" ${RIGHT_NOW} >> ${runTimeLog}
 		python ${platypus}Platypus.py callVariants --nCPU=16 --refFile=${reference} --bamFiles=${temp}${bull}${region}.realigned${recal}.bam --output=${results}${bull}${region}.realigned${recal}.platypus.vcf 
 		RIGHT_NOW=$(date +"%s")
 		echo "ENDING: $FUNCNAME 3rd" ${RIGHT_NOW} >> ${runTimeLog}
 	}
-	if $run_platypus; then platypus; fi
+	echo "run_platypus is ${run_platypus}"
+	if [ ${run_platypus} = 1 ]; then echo "Running Platypus callVariants"; PlatypusCallVariants; else echo "Not running Platypus callVariants"; fi
 
-	function mpileup () {
+	function Mpileup () {
 		RIGHT_NOW=$(date +"%s")
 		echo "BEGINNING: $FUNCNAME 3rd" ${RIGHT_NOW} >> ${runTimeLog}
 		echo "${SAMTOOLS}samtools mpileup -f ${reference} ${mpileup_region_arg} -A -C50 -E -D -S -u ${temp}${bull}${region}.realigned${recal}.bam"
@@ -261,7 +271,8 @@ function GATKpipeline () {
 		RIGHT_NOW=$(date +"%s")
 		echo "ENDING: $FUNCNAME 3rd" ${RIGHT_NOW} >> ${runTimeLog}
 	}
-	if $run_mpileup; then mpileup; fi
+	echo "run_mpileup is ${run_mpileup}"
+	if [ ${run_mpileup} = 1 ]; then echo "Running Mpileup"; Mpileup; else echo "Not running Mpileup"; fi
 	
 	RIGHT_NOW=$(date +"%s")
 	echo "ENDING: $FUNCNAME " ${RIGHT_NOW} >> ${runTimeLog}
