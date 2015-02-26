@@ -48,7 +48,7 @@ fi
 # Region (aka location) - optional
 location=""
 if [ "${location}" = "" ]; then 
-	gatk_region_arg=""; 
+	gatk_region_arg=""
 	mpileup_region_arg=""
 	region=""
 else 
