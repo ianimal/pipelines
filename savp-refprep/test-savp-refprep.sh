@@ -4,7 +4,7 @@
 #SBATCH -o refprep_test.o%j
 #SBATCH -A iPlant-Collabs
 #SBATCH -p normal
-#SBATCH -t 47:30:00
+#SBATCH -t 00:30:00
 #SBATCH -N 1
 #SBATCH -n 16
 

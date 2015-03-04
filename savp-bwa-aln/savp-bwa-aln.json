@@ -11,7 +11,7 @@
  "executionType":"HPC",
  "helpURI":"http://www.broadinstitute.org/gatk",
  "label": "Single Animal Variant Pipeline BWA ALN step",
- "longDescription":"Prepare bam and bam.bai files from fasta or fastq single/paired inputs"
+ "longDescription":"Prepare bam and bam.bai files from fasta or fastq single/paired inputs",
  "modules":[],
  "name":"jcarson-savp-bwa-aln",
  "ontology":["http://sswapmeet.sswap.info/agave/apps/Application"],
