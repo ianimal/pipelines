@@ -1,0 +1,19 @@
+{
+    "jobName": "savp-refprep-030-01",
+    "softwareName": "jcarson-savp-refprep-0.3.0",
+    "processorsPerNode": 12,
+    "requestedTime": "00:30:00",
+    "memoryPerNode": 24,
+    "nodeCount": 1,
+    "batchQueue": "normal",
+    "archive": false,
+    "archivePath": "",
+    "inputs": { 
+		"referenceFasta": "agave://data.iplantcollaborative.org/jcarson/example_data/foo.fasta.gz"
+    },
+    "parameters": { 
+    	"cleanupParameter": true   
+    },
+    "outputs": {
+    }
+}

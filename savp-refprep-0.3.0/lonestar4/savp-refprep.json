@@ -1,0 +1,57 @@
+{"available":true,
+ "checkpointable":false,
+ "defaultMemoryPerNode":24,
+ "defaultProcessorsPerNode":12,
+ "defaultMaxRunTime":"23:30:00",
+ "defaultNodeCount":1,
+ "defaultQueue":"normal",
+ "deploymentPath":"jcarson/applications/savp-refprep-0.3.0/lonestar4/",
+ "deploymentSystem":"data.iplantcollaborative.org",
+ "executionSystem":"lonestar4-04242014-1023-jcarson",
+ "executionType":"HPC",
+ "helpURI":"http://www.broadinstitute.org/gatk",
+ "label": "Single Animal Variant Pipeline Reference Preparation Step",
+ "longDescription":"Index reference using samtools faidx, bwa index, and CreateSequenceDictionary. Bundles all files into tar",
+ "modules":[],
+ "name":"jcarson-savp-refprep",
+ "ontology":["http://sswapmeet.sswap.info/agave/apps/Application"],
+ "parallelism":"SERIAL",
+ "shortDescription":"Index reference files; bundle into tar",
+ "storageSystem":"data.iplantcollaborative.org",
+ "tags":["variants","NGS"],
+ "templatePath":"savp-refprep.template",
+ "testPath":"test-savp-refprep.sh",
+ "version":"0.3.0",
+ "inputs":[
+   {"id":"referenceFasta",
+     "value":
+        {"default":"",
+         "order":0,
+         "required":true,
+         "visible":true},
+     "semantics":
+        {"ontology":["http://sswapmeet.sswap.info/mime/application/X-fasta"],
+         "minCardinality":1,
+         "fileTypes":["raw-0"]},
+     "details":
+        {"description":"",
+         "label":"Reference fasta",
+         "argument":null,
+         "showArgument":false}}],
+ "parameters":[
+	{"id":"cleanupParameter",
+     "value":
+        {"default":true,
+         "order":100,
+         "required":true,
+         "type":"bool",
+         "visible":true},
+     "semantics":
+        {"ontology":["xs:boolean"]},
+     "details":
+        {"description":null,
+         "label":"Do not copy input and intermediate files to output directory",
+         "argument":null,
+         "showArgument":false}}],
+ "outputs":[]
+ }
