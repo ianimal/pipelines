@@ -45,7 +45,7 @@ A part of the Single Animal Variant Caller Pipeline
     It was originally developed at the Wellcome Trust Sanger Centre with
     Richard Durbin.  
     The Sourceforge page for the program can be found here:
-    ```http://bio-bwa.sourceforge.net/```
+    http://bio-bwa.sourceforge.net/
 
 ### Citing BWA:
     Please make sure to cite BWA properly according to the Sourceforge page
