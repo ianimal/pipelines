@@ -1,0 +1,309 @@
+#---------------------------------------------
+# Script for variant calling 
+#
+# Original author: marlies dolezal (may-june 2013)
+# Alterations: christine baes (june, july, august 2013)
+# Modifications: eric fritz-waters (september, october 2013)
+# Testing mods and agave for stampede:	james carson (january 2015)
+#---------------------------------------------
+
+#--------------------------------------------
+# Inputs and parameters
+#--------------------------------------------
+
+# The bam file to analyze - required
+# Warning - .bam.bai file must also be in same directory
+FILE=${inputBam}
+
+# The reference files.  - required
+# Warning - must be the same as used to create the bam
+# Warning - bundle must be have common base name as contents
+# Warning - contents must include .dict   .fa    .fa.fai    .fa.{amb, ann, bwt, pac, sa}
+reference_bundle=${referenceBundle}
+
+# Known variant vcf file - optional
+dbSNP_work=${knownVariants}
+if [ "${dbSNP_work}" = "" ]; then 
+	realign_dbsnp_arg=""
+	ug_dbsnp_arg=""
+	run_recalibrator=false
+	recal=""
+else
+	realign_dbsnp_arg="-known ${dbSNP_work}"
+	ug_dbsnp_arg="--dbsnp ${dbSNP_work}"
+	run_recalibrator=true
+	recal=".recal"
+fi
+
+# The string defining the region (location) of the bam file to analyze - optional
+echo "Region is ${regionName}"
+location=${regionName}
+if [ "${location}" = "" ]; then 
+	gatk_region_arg=""; 
+	mpileup_region_arg=""
+	region=""
+else 
+	gatk_region_arg="-L ${location}"
+	mpileup_region_arg="-r ${location}"
+	region=".${location}"
+fi
+
+run_unifiedgenotyper=${runUnifiedGenotyper}
+run_platypus=${runPlatypus}
+run_mpileup=${runMpileup}
+
+cleanup_inputs=${cleanupInputs}
+cleanup_intermediates=${cleanupIntermediates}
+
+# number of cores to use per function
+n=12
+
+# memory per function
+m=18
+
+#---------------------------------------------
+# DIRECTORIES
+#---------------------------------------------
+
+bull=`echo "$FILE" | sed 's/.bam//g'`
+temp=${bull}.temp/
+log=${bull}.logs/
+results=${bull}.results/
+
+mkdir $temp
+mkdir $log
+mkdir $results
+
+#---------------------------------------------
+# PARAMETER FILES
+#---------------------------------------------
+
+# eventually update the following lines to access other types of bundles
+tar -xvf ${reference_bundle}
+ref=`echo "$reference_bundle" | sed 's/.tar//g'`
+reference=${ref}.fa
+dictionary=${ref}.dict
+
+
+#---------------------------------------------
+# PROGRAMME VERSIONS
+#---------------------------------------------
+
+#module load jdk64/1.8.0 - apparently not compatible with gatk 3.1.1
+
+module load jdk64/1.7.0
+JAVADIR=
+
+module load picard
+PICARD=$TACC_PICARD_DIR
+
+module load gatk/3.1.1
+GATK=$TACC_GATK_DIR
+
+module load samtools
+SAMTOOLS=
+BCFTOOLS=
+vcfutils=vcfutils.pl # comes with samtools module
+
+# module load python
+# module load Platypus 						### DOES NOT EXIST YET ON LONESTAR
+# PLATYPUS=$TACC_PLATYPUS_DIR
+
+tar -xvf bin.tgz
+PLATYPUS=$PWD/bin/
+# export PATH=$PATH:"$PWD/bin"
+
+
+#---------------------------------------------
+# FUNCTIONS
+#---------------------------------------------
+
+function GATKpipeline () {
+	runTimeLog=${log}${bull}${region}.runtime.txt
+	RIGHT_NOW=$(date +"%s")
+	echo "Beginning: $FUNCNAME" $RIGHT_NOW >> ${runTimeLog}
+	
+	function extractRegion () {
+		RIGHT_NOW=$(date +"%s")
+		echo "BEGINNING: $FUNCNAME " $RIGHT_NOW >> ${runTimeLog}
+		${JAVADIR}java -Xmx${m}g -jar ${GATK}GenomeAnalysisTK.jar \
+		-T PrintReads --unsafe -nct ${n} --defaultBaseQualities 30 \
+		-R ${reference} \
+		-I ${bull}.bam \
+		-o ${bull}${region}.bam \
+		${gatk_region_arg} \
+		-allowPotentiallyMisencodedQuals
+		RIGHT_NOW=$(date +"%s")
+		echo "ENDING: $FUNCNAME " ${RIGHT_NOW} >> ${runTimeLog}
+	}
+	echo "Region is ${region}. If region specified, will run extractRegion"
+	if [ "${region}" != "" ]; then extractRegion; fi
+
+	function RealignerTargetCreator () {
+		RIGHT_NOW=$(date +"%s")
+		echo "BEGINNING: $FUNCNAME" $RIGHT_NOW >> ${runTimeLog}
+		${JAVADIR}java -Xmx${m}g -jar ${GATK}GenomeAnalysisTK.jar \
+		-T RealignerTargetCreator --unsafe -nt ${n} \
+		-R ${reference} \
+		-I ${bull}${region}.bam \
+		${realign_dbsnp_arg} \
+		-o ${temp}${bull}${region}.RTCintervals.list \
+		${gatk_region_arg} \
+		-l INFO \
+		-log ${log}${bull}${region}.RealignerTargetCreator.log \
+		-allowPotentiallyMisencodedQuals
+		#attention -o file must be named .list or .bed for IndelRealigner
+		RIGHT_NOW=$(date +"%s")
+		echo "ENDING: $FUNCNAME" ${RIGHT_NOW} >> ${runTimeLog}
+	}
+	echo "Will run RealignerTargetCreator"
+	RealignerTargetCreator
+
+	function IndelRealigner () {
+		RIGHT_NOW=$(date +"%s")
+		echo "BEGINNING: $FUNCNAME" ${RIGHT_NOW} >> ${runTimeLog}
+		${JAVADIR}java -Xmx${m}g -jar ${GATK}GenomeAnalysisTK.jar \
+		-T IndelRealigner --unsafe \
+		-R ${reference} \
+		-I ${bull}${region}.bam \
+		-targetIntervals ${temp}${bull}${region}.RTCintervals.list \
+		${realign_dbsnp_arg} \
+		${gatk_region_arg} \
+		--consensusDeterminationModel USE_SW \
+		-o ${temp}${bull}${region}.realigned.bam \
+		-l INFO \
+		-log ${log}${bull}${region}.IndelRealigner.log \
+		-allowPotentiallyMisencodedQuals
+		#@ -known Non-indel variants in these files will be ignored. so we can use
+		#batch download of all variants from NCBI or ensembl
+		RIGHT_NOW=$(date +"%s")
+		echo "ENDING: $FUNCNAME" ${RIGHT_NOW} >> ${runTimeLog}
+	}
+	echo "Will run IndelRealigner"
+	IndelRealigner
+
+	function BaseRecalibrator () {
+		RIGHT_NOW=$(date +"%s")
+		echo "BEGINNING: $FUNCNAME Part 1" ${RIGHT_NOW} >> ${runTimeLog}
+		${JAVADIR}java -Xmx${m}g -jar ${GATK}GenomeAnalysisTK.jar \
+		-T BaseRecalibrator --unsafe -nct ${n} \
+		-R ${reference} \
+		${gatk_region_arg} \
+		-I ${temp}${bull}${region}.realigned.bam \
+	     	-knownSites ${dbSNP_work} \
+		-o ${temp}${bull}${region}.realigned.grp \
+		-l INFO \
+		-allowPotentiallyMisencodedQuals 
+		#--plot_pdf_file ${Reg}${bull}.pre_recal.pdf
+		RIGHT_NOW=$(date +"%s")
+		echo "ENDING: $FUNCNAME Part 1" ${RIGHT_NOW} >> ${runTimeLog}
+		
+		RIGHT_NOW=$(date +"%s")
+		echo "BEGINNING: $FUNCNAME Part 2" ${RIGHT_NOW} >> ${runTimeLog}
+		${JAVADIR}java -Xmx${m}g -jar ${GATK}GenomeAnalysisTK.jar \
+		-T BaseRecalibrator --unsafe -nct ${n} \
+		-R ${reference} \
+		${gatk_region_arg} \
+		-I ${temp}${bull}${region}.realigned.bam \
+		-BQSR ${temp}${bull}${region}.realigned.grp \
+     		-knownSites ${dbSNP_work} \
+		-o ${temp}${bull}${region}.realigned${recal}.grp \
+		-l INFO \
+		-allowPotentiallyMisencodedQuals #\
+		#--plot_pdf_file ${Reg}${bull}.post_recal.pdf
+		RIGHT_NOW=$(date +"%s")
+		echo "ENDING: $FUNCNAME Part 2" ${RIGHT_NOW} >> ${runTimeLog}
+			
+		RIGHT_NOW=$(date +"%s")
+		echo "BEGINNING: $FUNCNAME Part 3" ${RIGHT_NOW} >> ${runTimeLog}		
+		${JAVADIR}java -Xmx${m}g -jar ${GATK}GenomeAnalysisTK.jar \
+		-T PrintReads --unsafe -nct ${n} \
+		-R ${reference} \
+		${gatk_region_arg} \
+		-I ${temp}${bull}${region}.realigned.bam \
+		-BQSR ${temp}${bull}${region}.realigned.grp \
+		-o ${temp}${bull}${region}.realigned${recal}.bam \
+		-l INFO \
+		-log ${log}${bull}${region}.realigned${recal}.bam.log \
+		-allowPotentiallyMisencodedQuals
+		RIGHT_NOW=$(date +"%s")
+		echo "ENDING: $FUNCNAME Part 3" ${RIGHT_NOW} >> ${runTimeLog}
+	}
+	echo "run_recalibrator is set to ${run_recalibrator}.  If true, then will run BaseRecalibrator"
+	if [ ${run_recalibrator} ]; then BaseRecalibrator; fi 
+
+	function UnifiedGenotyper () {
+		RIGHT_NOW=$(date +"%s")
+		echo "BEGINNING: $FUNCNAME" ${RIGHT_NOW} >> ${runTimeLog}
+		${JAVADIR}java -Xmx${m}g -jar ${GATK}GenomeAnalysisTK.jar \
+		-T UnifiedGenotyper --unsafe -nt ${n} \
+		-R ${reference} \
+		${gatk_region_arg} \
+		-I ${temp}${bull}${region}.realigned${recal}.bam \
+		-o ${results}${bull}${region}.realigned${recal}.UG.raw.vcf \
+		${ug_dbsnp_arg} \
+		-out_mode EMIT_VARIANTS_ONLY \
+		-stand_call_conf 30.0 \
+		-stand_emit_conf 30.0 \
+		--genotype_likelihoods_model BOTH \
+		-l INFO  \
+		-log ${log}${bull}${region}.realigned${recal}.UnifiedGenotyper.log \
+		-allowPotentiallyMisencodedQuals
+		RIGHT_NOW=$(date +"%s")
+		echo "ENDING: $FUNCNAME" ${RIGHT_NOW} >> ${runTimeLog}
+	}
+	echo "run_unifiedgenotyper is ${run_unifiedgenotyper}"
+	if [ ${run_unifiedgenotyper} ]; then echo "Running UnifiedGenotyper"; UnifiedGenotyper; else echo "Not running UnifiedGenotyper"; fi
+
+	function PlatypusCallVariants () {
+		RIGHT_NOW=$(date +"%s")
+		echo "BEGINNING: $FUNCNAME 3rd" ${RIGHT_NOW} >> ${runTimeLog}
+		python ${PLATYPUS}Platypus.py callVariants --nCPU=${n} --refFile=${reference} --bamFiles=${temp}${bull}${region}.realigned${recal}.bam --output=${results}${bull}${region}.realigned${recal}.platypus.vcf 
+		RIGHT_NOW=$(date +"%s")
+		echo "ENDING: $FUNCNAME 3rd" ${RIGHT_NOW} >> ${runTimeLog}
+	}
+	echo "run_platypus is ${run_platypus}"
+	if [ ${run_platypus} ]; then echo "Running Platypus callVariants"; PlatypusCallVariants; else echo "Not running Platypus callVariants"; fi
+
+	function Mpileup () {
+		RIGHT_NOW=$(date +"%s")
+		echo "BEGINNING: $FUNCNAME 3rd" ${RIGHT_NOW} >> ${runTimeLog}
+		echo "${SAMTOOLS}samtools mpileup -f ${reference} ${mpileup_region_arg} -A -C50 -E -D -S -u ${temp}${bull}${region}.realigned${recal}.bam"
+		${SAMTOOLS}samtools mpileup -f ${reference} ${mpileup_region_arg} -A -C50 -E -D -S -u ${temp}${bull}${region}.realigned${recal}.bam | \
+		${BCFTOOLS}bcftools view -cvgb - > ${temp}${bull}${region}.raw3.bcf 2> ${temp}${bull}${region}.raw3.bcf.log 
+		${BCFTOOLS}bcftools view ${temp}${bull}${region}.raw3.bcf | ${vcfutils} varFilter -D800 - > ${results}${bull}${region}.realigned${recal}.flt.vcf 
+		RIGHT_NOW=$(date +"%s")
+		echo "ENDING: $FUNCNAME 3rd" ${RIGHT_NOW} >> ${runTimeLog}
+	}
+	echo "run_mpileup is ${run_mpileup}"
+	if [ ${run_mpileup} ]; then echo "Running Mpileup"; Mpileup; else echo "Not running Mpileup"; fi
+	
+	RIGHT_NOW=$(date +"%s")
+	echo "ENDING: $FUNCNAME " ${RIGHT_NOW} >> ${runTimeLog}
+}
+GATKpipeline
+
+# Clean up
+echo "cleanup_inputs is ${cleanup_inputs}"
+if [ ${cleanup_inputs} ]; then echo "Cleaning up input files"
+	rm ${FILE}; rm ${FILE}.bai										# remove inputs
+	rm ${dbSNP_work}; rm ${dbSNP_work}.idx          # remove dbSNP
+	rm ${reference_bundle}; 
+	rm ${reference}; rm ${dictionary} 		# remove reference files
+	rm ${reference}.fai; rm ${reference}.amb; rm ${reference}.ann; 	# remove reference files
+	rm ${reference}.bwt; rm ${reference}.pac; rm ${reference}.sa	# remove reference files
+else
+	echo "Skipping input file clean up"
+fi
+
+echo "cleanup_intermediates is ${cleanup_intermediates}"
+if [ ${cleanup_intermediates} ]; then echo "Cleaning up intermediate files"
+	rm -rf ${temp}			# remove intermediate files
+else
+	echo "Skipping intermediate file clean up"
+fi
+
+
+rm -rf bin
+rm -rf bin.tgz
+
