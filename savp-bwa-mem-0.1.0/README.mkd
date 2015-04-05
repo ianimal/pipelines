@@ -1,0 +1,62 @@
+BWA mem Alignment
+-----------------
+A part of the Single Animal Variant Caller Pipeline  
+
+
+### What it does:
+    BWA mem takes an indexed reference genome and either one
+    (for single-end reads) or two (for paired-end reads) fastq files.
+    BWA will then align these reads to the provided genome and return
+    a bam file.
+
+### How to use it:
+    BWA mem is relatively simple to use, requiring two input files
+    and two parameters (this is subject to change in the future).
+    It returns a single bam file as output.  
+
+    Inputs:  
+        1. Fastq file(s) (.fq or .fastq): these are files that come off a sequencing machine.
+        If they're paired-end, you'll have two with similar names
+        (e.g. myFastq_1.fastq and myFastq_2.fastq).
+        2. Indexed reference bundle (.tgz): this is a flat archive produced by
+        running the reference bundle step of the pipeline. This need only
+        be done once for each species of animal you plan to run through
+        the pipeline. This file will have a .tgz file extension.
+
+    Parameters:  
+        1. Barcode: this is what the final output will be named. This parameter
+        will also be used to name the read groups in the output, so make sure it's
+        something meaningful to you.
+        2. Cleanup: this is a flag to determine if intermediate files should be
+        returned with normal output. This is useful for debugging but probably
+        won't be necessary for day-to-day runs.
+
+    Outputs:  
+        1. Bam file (.bam): a file which gives information about where each read in
+        the fastq aligned to the reference genome. This can then be used as
+        input to variant callers and other analysis programs.
+        2. Bam index file (.bai): this file helps later programs access the bam file
+        more easily by providing metadata about where a given read is in the bam file.
+        Make sure it stays in the same directory as the accompanying bam file.
+
+
+### Where it came from:
+    BWA is maintained by a group at the Broad Institute led by Heng Li.
+    It was originally developed at the Wellcome Trust Sanger Centre with
+    Richard Durbin.  
+    The Sourceforge page for the program can be found here:
+    ```http://bio-bwa.sourceforge.net/```
+
+### Citing BWA:
+    Please make sure to cite BWA properly according to the Sourceforge page
+    if you use this app.
+
+### Citing iAnimal:
+    Make sure to cite iAnimal too! More information can be found at our homepage.
+    
+### Getting help:
+    For help, comments, and bug fixes, contact:
+        James Carson and Eric Dawson
+        Texas Advanced Computing Center
+
+    Texas
