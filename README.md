@@ -1,7 +1,6 @@
 # pipelines
 
 
-README.txt
 
 Single Animal Variant Pipeline (SAVP)
 
