@@ -1,0 +1,57 @@
+## INPUTS
+data_a=${inputSequence1}
+data_b=${inputSequence2}  
+reference_bundle=${referenceBundle}
+
+## INPUT PARAMETERS
+barcode=${inputBarcode} 
+cleanup=${cleanupParameter}
+
+echo "Clean up parameter is now set to:"
+echo ${cleanup}
+
+## PRE-PROCESSING INPUTS
+
+# gunzip input files if needed
+data_ext="${data_a##*.}"
+if [ ${data_ext} = "gz" ]; then gunzip ${data_a}; data_a=${data_a%.*}; fi
+data_ext="${data_b##*.}"
+if [ ${data_ext} = "gz" ]; then gunzip ${data_b}; data_b=${data_b%.*}; fi
+
+# untar reference bundle
+tar -xvf ${reference_bundle}
+ref=`echo "$reference_bundle" | sed 's/.tar//g'`
+reference=${ref}.fa
+dictionary=${ref}.dict
+
+# Fixed parameters
+n=11					# number of cores to use per function
+
+## MAIN FUNCTIONS
+
+module load jdk64
+module load picard
+module load samtools
+module load bwa/0.7.7
+
+# Check if not paired
+if [ -z ${data_b} ]
+    then bwa mem -t ${n} ${reference} ${data_a} | samtools view -bhS -@${n} - | samtools sort -@${n} - out_fasta_sorted
+else
+    bwa mem -t ${n} ${reference} ${data_a} ${data_b} | samtools view -bhS -@${n} - | samtools sort -@${n} - out_fasta_sorted
+fi
+
+java -Xmx12g -jar $TACC_PICARD_DIR/AddOrReplaceReadGroups.jar INPUT=out_fasta_sorted.bam OUTPUT=${barcode}.mem.bam RGLB=1 RGPL=illumina RGPU=all RGSM=${barcode} VALIDATION_STRINGENCY=SILENT
+
+samtools index ${barcode}.mem.bam
+
+# Clean up
+if [ ${cleanup} ]; then echo "Cleaning up input and intermediate files"
+	rm ${data_a}; rm ${data_b}					# remove inputs
+	rm out_fasta_sorted.bam						# remove intermediate files
+	rm ${reference_bundle}; rm ${reference}; rm ${dictionary} 	# remove reference files
+	rm ${reference}.fai; rm ${reference}.amb; rm ${reference}.ann 	# remove reference files
+	rm ${reference}.bwt; rm ${reference}.pac; rm ${reference}.sa	# remove reference files
+else
+	echo "Skipping clean up"
+fi

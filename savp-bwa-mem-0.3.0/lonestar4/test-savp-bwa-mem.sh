@@ -20,7 +20,7 @@ data_a="HO.2081.AP.03.1_Unique.fastq.gz"
 data_b="HO.2081.AP.03.2_Unique.fastq.gz"
 barcode="HO.2081.AP.03"   # make the user input this, required string
 reference_bundle="umd_3_1_Y_Mito.tar"  
-cleanup=true
+cleanup=false
 
 ## PRE-PROCESSING INPUTS
 
@@ -31,7 +31,7 @@ data_ext="${data_b##*.}"
 if [ ${data_ext} = "gz" ]; then gunzip ${data_b}; data_b=${data_b%.*}; fi
 
 # untar reference bundle
-# tar -xvf ${reference_bundle}
+tar -xvf ${reference_bundle}
 ref=`echo "$reference_bundle" | sed 's/.tar//g'`
 reference=${ref}.fa
 dictionary=${ref}.dict

@@ -1,0 +1,103 @@
+{"available":true,
+ "checkpointable":false,
+ "defaultMemoryPerNode":24,
+ "defaultProcessorsPerNode":12,
+ "defaultMaxRunTime":"23:59:00",
+ "defaultNodeCount":1,
+ "defaultQueue":"normal",
+ "deploymentPath":"jcarson/applications/savp-bwa-mem-0.3.0/lonestar4",
+ "deploymentSystem":"data.iplantcollaborative.org",
+ "executionSystem":"lonestar4-04242014-1023-jcarson",
+ "executionType":"HPC",
+ "helpURI":"http://www.broadinstitute.org/gatk",
+ "label": "Single Animal Variant Pipeline BWA MEM step",
+ "longDescription":"Prepare bam and bam.bai files from fasta or fastq single/paired inputs",
+ "modules":[],
+ "name":"jcarson-savp-bwa-mem",
+ "ontology":["http://sswapmeet.sswap.info/agave/apps/Application"],
+ "parallelism":"SERIAL",
+ "shortDescription":"Prepare bam and bam.bai files",
+ "storageSystem":"data.iplantcollaborative.org",
+ "tags":["variants","NGS"],
+ "templatePath":"savp-bwa-mem.template",
+ "testPath":"test-savp-bwa-mem.sh",
+ "version":"0.3.0",
+ "inputs":[
+    {"id":"inputSequence1",
+     "value":
+        {"default":"foo.1.fastq.gz",
+         "order":1,
+         "required":true,
+         "visible":true},
+     "semantics":
+        {"ontology":["http://sswapmeet.sswap.info/mime/application/X-fastq"],
+         "minCardinality":1,
+         "fileTypes":["raw-0"]},
+     "details":
+        {"description":"",
+         "label":"A fasta or fastq file. Can be gzipped.",
+         "argument":null,
+         "showArgument":false}},
+	{"id":"inputSequence2",
+     "value":
+        {"default":"foo.2.fastq.gz",
+         "order":2,
+         "required":false,
+         "visible":true},
+     "semantics":
+        {"ontology":["http://sswapmeet.sswap.info/mime/application/X-fastq"],
+         "minCardinality":1,
+         "fileTypes":["raw-0"]},
+     "details":
+        {"description":"",
+         "label":"Optional paired fasta or fastq file. Can be gzipped.",
+         "argument":null,
+         "showArgument":false}},
+    {"id":"referenceBundle",
+     "value":
+        {"default":"ref.tar",
+         "order":3,
+         "required":true,
+         "validator":".tar$",
+         "visible":true},
+     "semantics":
+        {"ontology":["http://sswapmeet.sswap.info/mime/application/X-tar"],
+         "minCardinality":1,
+         "fileTypes":["raw-0"]},
+     "details":
+        {"description":"",
+         "label":"Reference .tar w/ (.fa .dict .fa.{.amb .ann .bwt .fai .pac .sa})",
+         "argument":null,
+         "showArgument":false}}],
+ "parameters":[
+   {"id":"inputBarcode",
+     "value":
+        {"default":"ID",
+         "order":1,
+         "required":true,
+         "type":"string",
+         "visible":true},
+     "semantics":
+        {"ontology":["xs:string"]},
+     "details":
+        {"description":null,
+         "label":"Barcode. Will be base of output filename",
+         "argument":null,
+         "showArgument":false}},
+   {"id":"cleanupParameter",
+     "value":
+        {"default":true,
+         "order":100,
+         "required":true,
+         "type":"bool",
+         "visible":true},
+     "semantics":
+        {"ontology":["xs:boolean"]},
+     "details":
+        {"description":null,
+         "label":"Do not copy input and intermediate files to output directory",
+         "argument":null,
+         "showArgument":false}}],
+ "outputs":[]
+ }
+ 

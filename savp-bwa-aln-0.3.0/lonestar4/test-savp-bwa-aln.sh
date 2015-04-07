@@ -31,7 +31,7 @@ data_ext="${data_b##*.}"
 if [ ${data_ext} = "gz" ]; then gunzip ${data_b}; data_b=${data_b%.*}; fi
 
 # untar reference bundle
-# tar -xvf ${reference_bundle}
+tar -xvf ${reference_bundle}
 ref=`echo "$reference_bundle" | sed 's/.tar//g'`
 reference=${ref}.fa
 dictionary=${ref}.dict
