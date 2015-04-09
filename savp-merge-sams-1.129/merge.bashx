@@ -1,0 +1,16 @@
+
+tar -zxf picard.tgz
+
+java -Xmx2g -jar picard/dist/picard.jar MergeSamFiles ${sortOrder} VALIDATION_STRINGENCY=SILENT CREATE_MD5_FILE=true CREATE_INDEX=true USE_THREADING=true ${outputFile} ${inputFiles} >> MergeSamFiles.log 2>&1
+
+# Clean up!
+rm -rf picard
+
+if [ ${cleanupIntermediates} ]; then echo "Cleaning up intermediate files"
+    # Remove all the input BAMs and SAMs except for the outputFile
+    # Extact the filename from the argument
+    outputFileName=$(echo "${outputFile}" | cut -f 2 -d "=")
+    bash cleanup-bams.sh "${outputFileName}"
+else
+	echo "Skipping intermediate file clean up"
+fi

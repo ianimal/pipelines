@@ -1,0 +1,122 @@
+{
+   "name":"savp-merge-sams",
+   "parallelism":"SERIAL",
+   "version":"1.129",
+   "helpURI":"http://broadinstitute.github.io/picard/",
+   "label":"Single Animal Variant Pipeline merge SAM or BAM files",
+   "shortDescription":"Merges multiple SAM or BAM files into one BAM file using Broad Institute Picard MergeSamFiles",
+   "longDescription":"",
+   "defaultQueue": "normal",
+   "deploymentPath":"vaughn/applications/savp-merge-sams",
+   "deploymentSystem":"data.iplantcollaborative.org",
+   "executionSystem":"lonestar4.tacc.teragrid.org",
+   "executionType":"HPC",
+   "templatePath":"merge.bashx",
+   "testPath":"merge.bashx",
+   "defaultProcessorsPerNode": 12,
+   "checkpointable":false,
+   "modules":[],
+   "tags":[
+      "samtools",
+      "merge",
+      "ianimal"
+   ],
+   "ontology":["http://sswapmeet.sswap.info/agave/apps/Application"],
+   "inputs":[
+	  {
+         "id":"inputFiles",
+         "value": {
+            "default":"",
+            "type":"string",
+            "validator":"",
+            "visible":true,
+            "required":true
+         },
+         "details":{
+            "label":"SAM or BAM input files",
+            "description":"",
+            "showArgument":true,
+            "repeatArgument": true,
+            "argument":"INPUT="
+         },
+         "semantics":{
+           "ontology":[
+               "http://sswapmeet.sswap.info/mime/application/X-sam"
+            ],
+            "minCardinality":1,
+            "maxCardinality":100,
+            "fileTypes":[
+               "raw-0"
+            ]
+         }
+      }
+   ],
+   "parameters":[
+      {
+         "id":"sortOrder",
+         "value":{
+            "default":"coordinate",
+            "type": "enumeration",
+            "visible":true,
+            "required":false,
+             "enum_values": [
+                    {
+                        "coordinate": "Coordinate"
+                    },
+                    {
+                        "queryname": "Sequence name"
+                    },
+                    {
+                        "unsorted": "Unsorted"
+                    }
+                ]
+         },
+         "details":{
+            "label":"Sort order for output file",
+            "description":"",
+            "argument":"SORT_ORDER=",
+            "showArgument":true
+         },
+         "semantics":{
+            "ontology":[
+               "xs:string"
+            ]
+         }
+      },
+      {
+         "id":"outputFile",
+         "value":{
+            "default":"merged.bam",
+            "type": "string",
+            "validator": ".bam",
+            "visible":true,
+            "required":false
+         },
+         "details":{
+            "label":"Name for output BAM file",
+            "description":"",
+            "argument":"OUTPUT=",
+            "showArgument":true
+         },
+         "semantics":{
+            "ontology":[
+               "xs:string"
+            ]
+         }
+      },{"id":"cleanupIntermediates",
+     "value":
+        {"default":true,
+         "order":100,
+         "required":true,
+         "type":"bool",
+         "visible":true},
+     "semantics":
+        {"ontology":["xs:boolean"]},
+     "details":
+        {"description":null,
+         "label":"Do not copy intermediate temporary files to output directory",
+         "argument":null,
+         "showArgument":false}}
+      ],
+"outputs":[]
+}

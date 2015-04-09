@@ -1,0 +1,39 @@
+{
+  "name":"test-savp-merge-sams-01",
+  "appId": "savp-merge-sams-1.129",
+  "batchQueue": "normal",
+  "executionSystem": "lonestar4.tacc.teragrid.org",
+  "maxRunTime": "01:00:00",
+  "memoryPerNode": "1GB",
+  "nodeCount": 1,
+  "processorsPerNode": 12,
+  "archive": false,
+  "archiveSystem": "data.iplantcollaborative.org",
+  "archivePath": null,
+  "inputs": {
+    "inputFiles": [ "agave://data.iplantcollaborative.org/vaughn/lonestar-savp/schnabelr/cow/1705/1705-A-PE-R01.aln.bam", "agave://data.iplantcollaborative.org/vaughn/lonestar-savp/schnabelr/cow/1705/1705-B-PE-R01.aln.bam"
+    ]
+  },
+  "parameters": {
+    "outputFile": "1705.bam",
+    "sortOrder": "coordinate",
+    "cleanupIntermediates": true
+  },
+  "notifications": [
+    {
+      "url":"http://requestbin.agaveapi.co/1mpeoxg1?job_id=${JOB_ID}&status=${JOB_STATUS}",
+      "event":"*",
+      "persistent":true
+    },
+    {
+      "url":"vaughn@tacc.utexas.edu",
+      "event":"FINISHED",
+      "persistent":false
+    },
+    {
+      "url":"vaughn@tacc.utexas.edu",
+      "event":"FAILED",
+      "persistent":false
+    }
+  ]
+}
