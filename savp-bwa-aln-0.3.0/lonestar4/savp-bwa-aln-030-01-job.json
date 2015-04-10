@@ -1,6 +1,6 @@
 {
     "jobName": "savp-bwa-aln-030-01",
-    "softwareName": "jcarson-savp-bwa-aln-0.3.0",
+    "softwareName": "ianimal-savp-bwa-aln-0.3.0u1",
     "processorsPerNode": 12,
     "requestedTime": "04:00:00",
     "memoryPerNode": 24,

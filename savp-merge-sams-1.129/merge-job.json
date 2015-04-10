@@ -1,6 +1,6 @@
 {
   "name":"test-savp-merge-sams-01",
-  "appId": "savp-merge-sams-1.129",
+  "appId": "ianimal-savp-merge-sams-1.129u1",
   "batchQueue": "normal",
   "executionSystem": "lonestar4.tacc.teragrid.org",
   "maxRunTime": "01:00:00",

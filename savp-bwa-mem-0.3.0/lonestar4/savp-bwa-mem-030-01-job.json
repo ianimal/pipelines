@@ -1,6 +1,6 @@
 {
     "jobName": "savp-bwa-mem-030-01",
-    "softwareName": "jcarson-savp-bwa-mem-0.3.0",
+    "softwareName": "ianimal-savp-bwa-mem-0.3.0u1",
     "processorsPerNode": 12,
     "requestedTime": "01:00:00",
     "memoryPerNode": 24,
