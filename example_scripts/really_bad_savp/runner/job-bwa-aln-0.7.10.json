@@ -1,0 +1,21 @@
+{
+  "name":"bwa-aln test-1416694252",
+  "appId": "bwa-aln-0.7.10",
+  "batchQueue": "normal",
+  "executionSystem": "stampede-11222014-1455-vaughn",
+  "maxRunTime": "01:00:00",
+  "nodeCount": 1,
+  "processorsPerNode": 4,
+  "archive": false,
+  "archiveSystem": "data.iplantcollaborative.org",
+  "archivePath": null,
+  "inputs": {
+    "query1": "/vaughn/development/bwa/SRR030257_1.fastq",
+    "databaseFasta": "/vaughn/development/bwa/NC_012967.1.fasta.zip",
+    "query2": "/vaughn/development/bwa/SRR030257_2.fastq"
+  },
+  "parameters": {
+    "numThreads": 4
+  },
+  "notifications": []
+}

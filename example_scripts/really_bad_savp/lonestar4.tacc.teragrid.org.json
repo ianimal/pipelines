@@ -1,0 +1,73 @@
+{"description": "The TACC Dell Linux Cluster (Lonestar) is a powerful, multi-use cyberinfrastructure HPC and remote visualization resource. Lonestar contains 22,656 cores within 1,888 Dell PowerEdgeM610 compute blades (nodes), 16 PowerEdge R610 compute-I/Oserver-nodes, and 2 PowerEdge M610 (3.3GHz) login nodes. Each compute node has 24GB of memory, and the login/development nodes have 16GB. The system storage includes a 1000TB parallel (SCRATCH) Lustre file system, and 276TB of local compute-node disk space (146GB/node). Lonestar also provides access to 14 large memory (1TB) nodes, and eight nodes containing two NVIDIA GPU's, giving users access to high-throughput computing and remote visualization capabilities respectively.",
+    "executionType": "HPC",
+    "id": "lonestar4.tacc.teragrid.org",
+    "login":
+    {"auth":
+        {"username":"iplant",
+         "password":"x4%2s)w5",
+         "type":"PASSWORD"},
+     "host":"lonestar.tacc.utexas.edu",
+     "port":22,
+     "protocol":"SSH"},
+    "maxSystemJobs": 100,
+    "maxSystemJobsPerUser": 50,
+    "name": "TACC Lonestar (Public)",
+    "queues": [
+        {
+            "customDirectives": "-A iPlant-Master",
+            "default": false,
+            "maxJobs": 25,
+            "maxMemoryPerNode": "24GB",
+            "maxNodes": 1,
+            "maxProcessorsPerNode": 12,
+            "maxUserJobs": 6,
+            "name": "serial"
+        },
+        {
+            "customDirectives": "-A iPlant-Master",
+            "default": false,
+            "maxJobs": 3,
+            "maxMemoryPerNode": "1000GB",
+            "maxNodes": 1,
+            "maxProcessorsPerNode": 24,
+            "maxUserJobs": 1,
+            "name": "largemem"
+        },
+        {
+            "customDirectives": "-A iPlant-Master",
+            "default": true,
+            "maxJobs": 50,
+            "maxMemoryPerNode": "24GB",
+            "maxNodes": 12,
+            "maxProcessorsPerNode": 12,
+            "maxUserJobs": 50,
+            "name": "normal"
+        },
+        {
+            "customDirectives": "-A iPlant-Master",
+            "default": false,
+            "maxJobs": 5,
+            "maxMemoryPerNode": "24GB",
+            "maxNodes": 1,
+            "maxProcessorsPerNode": 12,
+            "maxUserJobs": 1,
+            "name": "development"
+        }
+    ],
+    "scheduler": "SGE",
+    "scratchDir": "/scratch/0004/iplant/",
+    "site": "tacc.xsede.org",
+    "startupScript": "./bashrc",
+   "storage":
+    {"auth":
+        {"username":"iplant",
+         "password":"x4%2s)w5",
+         "type":"PASSWORD"},
+     "homeDir":"/home1/0004/iplant",
+     "host":"lonestar.tacc.utexas.edu",
+     "port":22,
+     "protocol":"SFTP",
+     "rootDir":"/"},
+    "type": "EXECUTION",
+    "workDir": "/work/0004/iplant/"
+}

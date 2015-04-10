@@ -1,0 +1,146 @@
+{   "available": true,
+    "checkpointable": false,
+    "defaultMaxRunTime": "47:30:00",
+    "defaultMemoryPerNode": 24,
+    "defaultNodeCount": 1,
+    "defaultProcessorsPerNode": 12,
+    "defaultQueue": "normal",
+    "deploymentPath": "/vaughn/applications/ianimal-savp-bwa-aln-0.2.1",
+    "deploymentSystem": "data.iplantcollaborative.org",
+    "executionSystem": "lonestar4.tacc.teragrid.org",
+    "executionType": "HPC",
+    "helpURI": "http://bio-bwa.sourceforge.net/bwa.shtml",
+    "icon": null,
+    "inputs": [
+        {
+            "details": {
+                "argument": null,
+                "description": "",
+                "label": "Optional paired fasta or fastq file. Can be gzipped.",
+                "repeatArgument": false,
+                "showArgument": false
+            },
+            "id": "inputSequence2",
+            "semantics": {
+                "fileTypes": [
+                    "raw-0"
+                ],
+                "maxCardinality": 1,
+                "minCardinality": 1,
+                "ontology": [
+                    "http://sswapmeet.sswap.info/mime/application/X-fastq"
+                ]
+            },
+            "value": {
+                "default": "foo.2.fastq.gz",
+                "enquote": false,
+                "order": 1,
+                "required": false,
+                "validator": null,
+                "visible": true
+            }
+        },
+        {
+            "details": {
+                "argument": null,
+                "description": "",
+                "label": "A fasta or fastq file. Can be gzipped.",
+                "repeatArgument": false,
+                "showArgument": false
+            },
+            "id": "inputSequence1",
+            "semantics": {
+                "fileTypes": [
+                    "raw-0"
+                ],
+                "maxCardinality": 1,
+                "minCardinality": 1,
+                "ontology": [
+                    "http://sswapmeet.sswap.info/mime/application/X-fastq"
+                ]
+            },
+            "value": {
+                "default": "foo.1.fastq.gz",
+                "enquote": false,
+                "order": 1,
+                "required": true,
+                "validator": null,
+                "visible": true
+            }
+        },
+        {
+            "details": {
+                "argument": null,
+                "description": "",
+                "label": "Reference .tar w/ (.fa .dict .fa.{.amb .ann .bwt .fai .pac .sa})",
+                "repeatArgument": false,
+                "showArgument": false
+            },
+            "id": "referenceBundle",
+            "semantics": {
+                "fileTypes": [
+                    "raw-0"
+                ],
+                "maxCardinality": 1,
+                "minCardinality": 1,
+                "ontology": [
+                    "http://sswapmeet.sswap.info/mime/application/X-tar"
+                ]
+            },
+            "value": {
+                "default": "ref.tar",
+                "enquote": false,
+                "order": 3,
+                "required": true,
+                "validator": ".tar$",
+                "visible": true
+            }
+        }
+    ],
+    "isPublic": false,
+    "label": "Single Animal Variant Pipeline BWA ALN step",
+    "lastModified": "2015-03-03T15:10:10.000-06:00",
+    "longDescription": "Prepare bam and bam.bai files from fasta or fastq single/paired inputs",
+    "modules": [],
+    "name": "lonestar-savp-bwa-aln",
+    "ontology": [
+        "http://sswapmeet.sswap.info/agave/apps/Application"
+    ],
+    "outputs": [],
+    "parallelism": "SERIAL",
+    "parameters": [
+        {
+            "details": {
+                "argument": null,
+                "description": null,
+                "label": "Barcode. Will be base of output filename",
+                "repeatArgument": false,
+                "showArgument": false
+            },
+            "id": "inputBarcode",
+            "semantics": {
+                "ontology": [
+                    "xs:string"
+                ]
+            },
+            "value": {
+                "default": "ID",
+                "enquote": false,
+                "order": 1,
+                "required": true,
+                "type": "string",
+                "validator": null,
+                "visible": true
+            }
+        }
+    ],
+    "revision": 1,
+    "shortDescription": "Prepare BAM and .BAI files",
+    "tags": [
+        "variants",
+        "NGS"
+    ],
+    "templatePath": "savp-bwa-aln.template",
+    "testPath": "test-savp-bwa-aln.sh",
+    "version": "0.2.1"
+}

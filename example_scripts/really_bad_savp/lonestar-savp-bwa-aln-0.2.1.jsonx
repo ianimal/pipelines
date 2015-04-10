@@ -1,0 +1,22 @@
+{
+  "name":"",
+  "appId": "lonestar-savp-bwa-aln-0.2.1",
+  "batchQueue": "normal",
+  "executionSystem": "lonestar4.tacc.teragrid.org",
+  "maxRunTime": "47:30:00",
+  "memoryPerNode": "24GB",
+  "nodeCount": 1,
+  "processorsPerNode": 12,
+  "archive": true,
+  "archiveSystem": "data.iplantcollaborative.org",
+  "archivePath": "",
+  "inputs": {
+    "inputSequence2": "",
+    "inputSequence1": "",
+    "referenceBundle": ""
+  },
+  "parameters": {
+    "inputBarcode": ""
+  },
+  "notifications": []
+}

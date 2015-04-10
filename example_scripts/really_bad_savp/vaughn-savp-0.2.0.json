@@ -1,0 +1,41 @@
+{
+  "name":"HO.2081-aln-savp",
+  "appId": "vaughn-savp-0.2.0",
+  "batchQueue": "normal",
+  "executionSystem": "stampede-11222014-vlogin",
+  "maxRunTime": "47:30:00",
+  "memoryPerNode": "32GB",
+  "nodeCount": 1,
+  "processorsPerNode": 16,
+  "archive": true,
+  "archiveSystem": "austin.data.iplantcollaborative.org",
+  "archivePath": "vaughn/savp/HO.2081",
+  "inputs": {
+    "inputBam": "agave://austin.data.iplantcollaborative.org/vaughn/savp/HO.2081/HO.2081.aln.bam",
+    "inputBamBai": "agave://austin.data.iplantcollaborative.org/vaughn/savp/HO.2081/HO.2081.aln.bam.bai",
+    "referenceBundle": "agave://data.iplantcollaborative.org/shared/iastate-tacc-genomics/umd_3_1_Y_Mito.tar"
+  },
+  "parameters": {
+    "regionName": "",
+    "runUnifiedGenotyper": true,
+    "runPlatypus": true,
+    "runMpileup": false
+  },
+  "notifications": [
+    {
+      "url":"http://requestbin.agaveapi.co/pafzz5pa?job_id=${JOB_ID}&status=${JOB_STATUS}",
+      "event":"*",
+      "persistent":true
+    },
+    {
+      "url":"vaughn@tacc.utexas.edu",
+      "event":"FINISHED",
+      "persistent":false
+    },
+    {
+      "url":"vaughn@tacc.utexas.edu",
+      "event":"FAILED",
+      "persistent":false
+    }
+  ]
+}

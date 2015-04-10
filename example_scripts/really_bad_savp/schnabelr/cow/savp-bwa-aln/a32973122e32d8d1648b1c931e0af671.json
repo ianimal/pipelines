@@ -1,0 +1,22 @@
+{
+    "appId": "lonestar-savp-bwa-aln-0.2.1", 
+    "archive": true, 
+    "archivePath": "vaughn/lonestar-savp/schnabelr/cow/1705", 
+    "archiveSystem": "data.iplantcollaborative.org", 
+    "batchQueue": "normal", 
+    "executionSystem": "lonestar4.tacc.teragrid.org", 
+    "inputs": {
+        "inputSequence1": "agave://data.iplantcollaborative.org/schnabelr/fastq_cow/AN.1705.BP.01.1_Unique.fastq.gz", 
+        "inputSequence2": "agave://data.iplantcollaborative.org/schnabelr/fastq_cow/AN.1705.BP.01.2_Unique.fastq.gz", 
+        "referenceBundle": "agave://lonestar-vaughn-work/iAnimal/umd_3_1_Y_Mito.tar"
+    }, 
+    "maxRunTime": "47:30:00", 
+    "memoryPerNode": "24GB", 
+    "name": "bwa.a32973122e32d8d1648b1c931e0af671", 
+    "nodeCount": 1, 
+    "notifications": [], 
+    "parameters": {
+        "inputBarcode": "1705-B-PE-R01"
+    }, 
+    "processorsPerNode": 12
+}

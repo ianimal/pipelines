@@ -1,0 +1,5 @@
+#/bin/bash
+
+export AGAVE_USER=vaughn
+export AGAVE_TOKEN=1884c27f72d9f88efb1b5de9ce7f62d
+echo "Hello"

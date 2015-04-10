@@ -1,0 +1,22 @@
+{
+  "name":"",
+  "appId": "vaughn-savp-bwa-aln-0.2.0",
+  "batchQueue": "normal",
+  "executionSystem": "stampede.tacc.utexas.edu",
+  "maxRunTime": "48:30:00",
+  "memoryPerNode": "32GB",
+  "nodeCount": 1,
+  "processorsPerNode": 16,
+  "archive": true,
+  "archiveSystem": "austin.data.iplantcollaborative.org",
+  "archivePath": "",
+  "inputs": {
+    "inputSequence2": "agave://data.iplantcollaborative.org/jcarson/example_data/HO.2081.AP.03.2_Unique.fastq",
+    "inputSequence1": "agave://data.iplantcollaborative.org/jcarson/example_data/HO.2081.AP.03.1_Unique.fastq",
+    "referenceBundle": "agave://data.iplantcollaborative.org/shared/iastate-tacc-genomics/umd_3_1_Y_Mito.tar"
+  },
+  "parameters": {
+    "inputBarcode": ""
+  },
+  "notifications": []
+}

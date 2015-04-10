@@ -1,0 +1,48 @@
+
+## INPUTS
+data_a=${inputSequence1}
+data_b=${inputSequence2}
+barcode=${inputBarcode}
+reference_bundle=${referenceBundle}
+
+## PRE-PROCESSING INPUTS
+
+# gunzip input files if needed
+data_ext="${data_a##*.}"
+if [ ${data_ext} = "gz" ]; then gunzip ${data_a}; data_a=${data_a%.*}; fi
+data_ext="${data_b##*.}"
+if [ ${data_ext} = "gz" ]; then gunzip ${data_b}; data_b=${data_b%.*}; fi
+
+# untar reference bundle
+tar -xvf ${reference_bundle}
+ref=`echo "$reference_bundle" | sed 's/.tar//g'`
+reference=${ref}.fa
+dictionary=${ref}.dict
+
+
+## MAIN FUNCTIONS
+
+module load bwa/0.7.7
+module load picard
+module load samtools
+
+## Generate index for forward reads
+bwa aln -t 11 ${reference} ${data_a} > aln_a.sai
+
+## If the reads are not paired, simpy run samse, otherwise build the sam index for the mates and align them with sampe
+if [ -z ${data_b} ]
+    then bwa samse ${reference} aln_a.sai ${data_a} | samtools view -bhS -@15 - | samtools sort -@15 - out_fasta_sorted
+else
+    bwa aln -t 11 ${reference} ${data_b} > aln_b.sai
+    bwa sampe ${reference} aln_a.sai aln_b.sai ${data_a} ${data_b} | samtools view -bhS -@15 - | samtools sort -@15 - out_fasta_sorted
+fi
+
+java -Xmx8g -jar $TACC_PICARD_DIR/AddOrReplaceReadGroups.jar INPUT=out_fasta_sorted.bam OUTPUT=${barcode}.aln.bam RGLB=1 RGPL=illumina RGPU=all RGSM=${barcode} VALIDATION_STRINGENCY=SILENT
+
+samtools index ${barcode}.aln.bam
+
+## Exclude temp and input files from being archived
+for C in *.sai out_fasta_sorted.* $data_a $data_b ${reference_bundle} ${ref}*
+do
+    rm -rf $C
+done
