@@ -1,0 +1,28 @@
+{
+    "jobName": "savp-031-01",
+    "softwareName": "jcarson-savp-0.3.1",
+    "processorsPerNode": 12,
+    "requestedTime": "02:00:00",
+    "memoryPerNode": 24,
+    "nodeCount": 1,
+    "batchQueue": "normal",
+    "archive": false,
+    "archivePath": "",
+    "inputs": {
+        "inputBam": "agave://data.iplantcollaborative.org/jcarson/example_data/JER.33680.AP.01.mem.fixed.bam",
+        "inputBamBai": "agave://data.iplantcollaborative.org/jcarson/example_data/JER.33680.AP.01.mem.fixed.bam.bai",
+        "referenceBundle": "agave://data.iplantcollaborative.org/shared/iastate-tacc-genomics/umd_3_1_Y_Mito.tar",
+	"knownVariants": "agave://data.iplantcollaborative.org/shared/iastate-tacc-genomics/Bos_taurus.dbSNP.vcf"
+    },
+    "parameters": {
+    	"regionName": "Chr8",
+    	"runUnifiedGenotyper": true,
+    	"runPlatypus": true,
+    	"runMpileup": true,
+    	"cleanupInputs": true,
+    	"cleanupIntermediates": true
+    },
+    "outputs": {
+    }
+}
+
