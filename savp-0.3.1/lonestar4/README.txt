@@ -11,6 +11,13 @@ savp: Variant caller pipeline
 
 VERSION HISTORY
 
+Version 0.3.1
+
+Two changes to savp.  
+1. Now calls modules using preferred approach.
+2. Includes workaround for agave forbidding the character string "ils" in scripts; vcfutils.pl renamed to be vcfutXXX.pl
+
+
 Version 0.3.0
 
 Adds clean-up options
