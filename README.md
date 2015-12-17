@@ -1,6 +1,6 @@
 # Pipelines
 
-## Notes
+## Notess
 The following applications are available in the iPlant Discovery Environment under the High Performance Computing section of the Apps catalog. They are accesible for scripting access via iPlant's Agave REST services platform, documented here http://preview.agaveapi.co/documentation/ .
 
 ## Single Animal Variant Pipeline (SAVP)
