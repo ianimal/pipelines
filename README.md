@@ -3,6 +3,8 @@
 ## Notes
 The following applications are available in the iPlant Discovery Environment under the High Performance Computing section of the Apps catalog. They are accesible for scripting access via iPlant's Agave REST services platform, documented here http://preview.agaveapi.co/documentation/ .
 
+Note also that the name iPlant is transitioning to be CyVerse.
+
 ## Single Animal Variant Pipeline (SAVP)
 
 ### VERSION HISTORY
