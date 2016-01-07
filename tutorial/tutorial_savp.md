@@ -1,4 +1,4 @@
-# Tutorials  (coming soon)
+# Tutorials
 
 [Jump back to README](../README.md)
 
@@ -76,11 +76,9 @@ Summary of Step 3:
 * Parameters: region; variant callers selected; clean-up
 
 
-### Running SAVP workflows from the command line
+### Running SAVP workflows from the command line (coming soon)
 
-Running from the command line requires an account and likely a compute allocation on the system on which you are running.  
-A key advantage of running from the command line is that outputs between steps can also be stored locally on the execution system.  
-This eliminates the need to copy the files back to the execution system for subsequent steps, saving significant time and bandwidth.
+Running from the command line requires an account and likely a compute allocation on the system on which you are running.  A key advantage of running from the command line is that outputs between steps can also be stored locally on the execution system.  This eliminates the need to copy the files back to the execution system for subsequent steps, saving significant time and bandwidth.
 
 First, however, you will need to set up your local environment.  
 

@@ -7,7 +7,18 @@ Note also that the name iPlant is transitioning to be CyVerse.
 
 ## Single Animal Variant Pipeline (SAVP)
 
+[Jump to SAVP Tutorial](/tutorial/tutorial_savp.md)
+
 ### VERSION HISTORY
+
+#### Version 0.3.1: Releasing soon
+---
+* Bug fixes
+* Calls modules in preferred fashion
+
+| Agave Application ID | Label |
+| -------------------- | ----- |
+| ianimal-savp-0.3.1u1 | Single Animal Variant Pipeline |
 
 #### Version 0.3.0: Release 04/09/2015
 ---
