@@ -56,14 +56,24 @@ Summary of Step 2:
 * Parameters: barcode; clean-up
 
 
-#### Step 3 - Running the pipeline
+#### Step 3 - Variant callers
 
+Three different variant callers are currently supported through the DE: GATK UnifiedGenotyper; Platypus CallVariants; and Samtools mpileup/vcfutils.
 
+Select **Inputs** and then select the **Browse** button on the right to open a navigation window.  From this window you will need to select in turn the outputs of previous steps: the bam file, the bam.bai file, and the reference tar. You can also use a known variant file, of which a sample for this tutorial which are found by navigating into *Community Data* then *iplant_training* then *savp_example_data* and selecting *known.variants.vcf*.
 
+Select **Parameters** and, if desired, specify a specific region (e.g. Chromosome) to variant call. specify a *Barcode*.  You can also modify the default selection of variant callers.  However, this is not recommended.
 
+Now select the *Launch Analysis* button.  As with Steps 1 and 2, a new folder for the output of this analysis will be created after launching the analysis.  Unless you specified a different location, it will be found in */iplant/home/yourusername/analyses/* which you can browse to using your **Data** window.
 
+Upon successful completion, depending on which variant callers you selected to run, appropriate *.vcf* files will appear in the output folder.  Job-related output and error text files will also appear.
 
+Summary of Step 3:
 
+* App name: *Single Animal Variant Pipeline 0.3.1* 
+* Inputs: bam and bam.bai files from Step 2; reference tar bundle from Step 1; known variants vcf (optional)
+* Outputs: vcf files depending on variant caller selection
+* Parameters: region; variant callers selected; clean-up
 
 
 ### Running SAVP workflows from the command line
