@@ -22,10 +22,13 @@ Different parts of the SAVP require a reference fasta and associated files. As a
 
 In the **Apps** window under *Workspace* select *Single Animal Variant Pipeline Reference Preparation Step 0.3.0*.  This will open a window for the app. 
 
-Select **Inputs** and then select the **Browse** button on the right to open a navigation window.  From this window you can select a reference fasta you previously uploaded, or the sample file provided for this tutorial which is found by navigating into *Community Data* then *iplant_training* then 
-*savp_example_data* and selecting *e-coli-K-12.fa*.  Select the *OK* button at the bottom of the window.  
+Select **Inputs** and then select the **Browse** button on the right to open a navigation window.  From this window you can select a reference fasta you previously uploaded, or the sample file provided for this tutorial which is found by navigating into *Community Data* then *iplant_training* then *savp_example_data* and selecting *e-coli-K-12.fa*.  Select the *OK* button at the bottom of the window.  
 
-Now select the *Launch Analysis* button.
+Now select the *Launch Analysis* button.  A new folder for the output of this analysis will be created after launching the analysis.  Unless you specified a different location, it will be found in */iplant/home/yourusername/analyses/* which you can browse to using your **Data** window.
+
+Upon successful completion, the new reference tar bundle file will appear in the output folder.  Job-related output and error text files will also appear.
+
+Summary of Step 1:
 
 * App name: *Single Animal Variant Pipeline Reference Preparation Step 0.3.0*
 * Input: reference fasta
@@ -35,16 +38,22 @@ Now select the *Launch Analysis* button.
 
 #### Step 2 - Creating bam files using bwa mem or bwa aln
 
-Both bwa mem and bwa aln apps are currently supported.
-As in the previous step, in the analysis window look for ________ and select it so that its app window pops up.
+Both bwa mem and bwa aln apps are currently supported.  As in Step 1, use the **Apps** window.  Choose either *Single Animal Variant Pipeline BWA ALN step 0.3.0* or *Single Animal Variant Pipeline BWA MEM step 0.3.0* and select it so that its app window pops up.
 
-App name: 
-Input: single fasta files or paired fasta files
-Input: reference tar bundle from Step 1
-Input: known variants vcf file (optional)
-Outputs: bam and bam.bai files
-Parameters:
+Select **Inputs** and then select the **Browse** button on the right to open a navigation window.  From this window you can select a single fasta/fastq or paired set of fasta/fastq files you previously uploaded.  The sample files provided for this tutorial which are found by navigating into *Community Data* then *iplant_training* then *savp_example_data* and selecting first *SRR2601715_1.fastq* and then *SRR2601715_2.fastq* as its pair.  Also select *e-coli-K-12.tar* which will be found in the output folder created by Step 1.
 
+Select **Parameters** and specify a *Barcode*.  The shared base name of the inputs is usually a good choice.
+
+Now select the *Launch Analysis* button.  As with Step 1, a new folder for the output of this analysis will be created after launching the analysis.  Unless you specified a different location, it will be found in */iplant/home/yourusername/analyses/* which you can browse to using your **Data** window.
+
+Upon successful completion, *barcode*.bam and *barcode*.bam.bai files will appear in the output folder.  Job-related output and error text files will also appear.
+
+Summary of Step 2:
+
+* App name: *Single Animal Variant Pipeline BWA ALN step 0.3.0* or *Single Animal Variant Pipeline BWA MEM step 0.3.0*
+* Inputs: single fasta files or paired fasta files; reference tar bundle from Step 1
+* Outputs: bam and bam.bai files
+* Parameters: barcode; clean-up
 
 
 #### Step 3 - Running the pipeline
