@@ -27,10 +27,10 @@ Select **Inputs** and then select the **Browse** button on the right to open a n
 
 Now select the *Launch Analysis* button.
 
-App name: *Single Animal Variant Pipeline Reference Preparation Step 0.3.0*
-Input: reference fasta
-Output: tar bundle containing reference fasta and associated files
-Parameters: clean-up
+* App name: *Single Animal Variant Pipeline Reference Preparation Step 0.3.0*
+* Input: reference fasta
+* Output: tar bundle containing reference fasta and associated files
+* Parameters: clean-up
 
 
 #### Step 2 - Creating bam files using bwa mem or bwa aln
