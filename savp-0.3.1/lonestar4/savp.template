@@ -227,7 +227,7 @@ function GATKpipeline () {
 		echo "ENDING: $FUNCNAME Part 3" ${RIGHT_NOW} >> ${runTimeLog}
 	}
 	echo "run_recalibrator is set to ${run_recalibrator}.  If true, then will run BaseRecalibrator"
-	if [ ${run_recalibrator} ]; then BaseRecalibrator; fi 
+	if [ ${run_recalibrator} = true -o ${run_recalibrator} = 1 ]; then echo "Running BaseRecalibrator"; BaseRecalibrator; fi 
 
 	function UnifiedGenotyper () {
 		RIGHT_NOW=$(date +"%s")
@@ -250,7 +250,7 @@ function GATKpipeline () {
 		echo "ENDING: $FUNCNAME" ${RIGHT_NOW} >> ${runTimeLog}
 	}
 	echo "run_unifiedgenotyper is ${run_unifiedgenotyper}"
-	if [ ${run_unifiedgenotyper} ]; then echo "Running UnifiedGenotyper"; UnifiedGenotyper; else echo "Not running UnifiedGenotyper"; fi
+	if [ ${run_unifiedgenotyper} = true -o ${run_unifiedgenotyper} = 1 ]; then echo "Running UnifiedGenotyper"; UnifiedGenotyper; else echo "Not running UnifiedGenotyper"; fi
 
 	function PlatypusCallVariants () {
 		RIGHT_NOW=$(date +"%s")
@@ -260,7 +260,7 @@ function GATKpipeline () {
 		echo "ENDING: $FUNCNAME 3rd" ${RIGHT_NOW} >> ${runTimeLog}
 	}
 	echo "run_platypus is ${run_platypus}"
-	if [ ${run_platypus} ]; then echo "Running Platypus callVariants"; PlatypusCallVariants; else echo "Not running Platypus callVariants"; fi
+	if [ ${run_platypus} = true -o ${run_platypus} = 1 ]; then echo "Running Platypus callVariants"; PlatypusCallVariants; else echo "Not running Platypus callVariants"; fi
 
 	function Mpileup () {
 		RIGHT_NOW=$(date +"%s")
@@ -273,7 +273,7 @@ function GATKpipeline () {
 		echo "ENDING: $FUNCNAME 3rd" ${RIGHT_NOW} >> ${runTimeLog}
 	}
 	echo "run_mpileup is ${run_mpileup}"
-	if [ ${run_mpileup} ]; then echo "Running Mpileup"; Mpileup; else echo "Not running Mpileup"; fi
+	if [ ${run_mpileup} = true -o ${run_mpileup} = 1 ]; then echo "Running Mpileup"; Mpileup; else echo "Not running Mpileup"; fi
 	
 	RIGHT_NOW=$(date +"%s")
 	echo "ENDING: $FUNCNAME " ${RIGHT_NOW} >> ${runTimeLog}
@@ -282,7 +282,7 @@ GATKpipeline
 
 # Clean up
 echo "cleanup_inputs is ${cleanup_inputs}"
-if [ ${cleanup_inputs} ]; then echo "Cleaning up input files"
+if [ ${cleanup_inputs} = true -o ${cleanup_inputs} = 1 ]; then echo "Cleaning up input files"
 	rm ${FILE}; rm ${FILE}.bai										# remove inputs
 	rm ${dbSNP_work}; rm ${dbSNP_work}.idx          # remove dbSNP
 	rm ${reference_bundle}; 
@@ -294,7 +294,7 @@ else
 fi
 
 echo "cleanup_intermediates is ${cleanup_intermediates}"
-if [ ${cleanup_intermediates} ]; then echo "Cleaning up intermediate files"
+if [ ${cleanup_intermediates} = true -o ${cleanup_intermediates} = 1 ]; then echo "Cleaning up intermediate files"
 	rm -rf ${temp}			# remove intermediate files
 else
 	echo "Skipping intermediate file clean up"
@@ -303,5 +303,3 @@ fi
 
 rm -rf bin
 rm -rf bin.tgz
-
-
