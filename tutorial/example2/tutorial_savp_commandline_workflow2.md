@@ -1,12 +1,12 @@
 # Data Locality with Agave
 
 See json job files in this directory
-[AN.156.AP.01.mem.job.json](AN.156.AP.01.mem.job.json)
-[AN.156.BP.01.mem.job.json](AN.156.BP.01.mem.job.json)
-[AN.156.BP.02.mem.job.json](AN.156.BP.02.mem.job.json)
-[AN.156.BP.03.mem.job.json](AN.156.BP.03.mem.job.json)
-[AN.156.merge.job.json](AN.156.merge.job.json)
-[AN.156.savp.job.json](AN.156.savp.job.json)
+* [AN.156.AP.01.mem.job.json](AN.156.AP.01.mem.job.json)
+* [AN.156.BP.01.mem.job.json](AN.156.BP.01.mem.job.json)
+* [AN.156.BP.02.mem.job.json](AN.156.BP.02.mem.job.json)
+* [AN.156.BP.03.mem.job.json](AN.156.BP.03.mem.job.json)
+* [AN.156.merge.job.json](AN.156.merge.job.json)
+* [AN.156.savp.job.json](AN.156.savp.job.json)
 
 ## Copy the reference data to tacc-global.iplantcollaborative.org
 
