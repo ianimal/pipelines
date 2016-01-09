@@ -1,0 +1,22 @@
+{
+    "jobName": "savp-bwa-mem-030-local",
+    "softwareName": "ianimal-savp-bwa-mem-0.3.0u1",
+    "processorsPerNode": 12,
+    "requestedTime": "08:00:00",
+    "memoryPerNode": 24,
+    "nodeCount": 1,
+    "batchQueue": "normal",
+    "archive": false,
+    "archivePath": "YOUR-ARCHIVE-PATH",
+    "inputs": {
+        "inputSequence1": "agave://data.iplantcollaborative.org/shared/iplant_training/savp_example_data/SRR2601691_1.fastq",
+        "inputSequence2": "agave://data.iplantcollaborative.org/shared/iplant_training/savp_example_data/SRR2601691_2.fastq",
+        "referenceBundle": "https://agave.iplantc.org/jobs/v2/JOBID-REFPREP/outputs/media/e-coli-K-12.tar"
+    },
+    "parameters": {
+        "inputBarcode": "SRR2601691",
+        "cleanupParameter": true
+    },
+    "outputs": {
+    }
+}

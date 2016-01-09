@@ -1,7 +1,5 @@
 # Tutorials
 
-[Jump back to README](../README.md)
-
 ## Single Animal Variant Pipeline (SAVP)
 
 The SAVP can be run via the web-based Discovery Environment or from the command line. In either case, you will need to first [register a CyVerse/iPlant] (https://user.iplantcollaborative.org/register/) account. Once your account is active, you can launch the [Discovery Environment] (https://de.iplantcollaborative.org/de) from your web browser.  
@@ -76,35 +74,8 @@ Summary of Step 3:
 * Parameters: region; variant callers selected; clean-up
 
 
-### Running SAVP workflows from the command line (coming soon)
+### Running SAVP workflows from the command line
 
-Running from the command line requires an account and likely a compute allocation on the system on which you are running.  A key advantage of running from the command line is that outputs between steps can also be stored locally on the execution system.  This eliminates the need to copy the files back to the execution system for subsequent steps, saving significant time and bandwidth.
+* [Go to command line workflow instructions example #1](example1/tutorial_savp_commandline_workflow.md)
 
-First, however, you will need to set up your local environment.  
-
-#### Step 0 - Prepare local environment
-
-Many of the steps to do this overlap with the steps required to develop your own apps for the DE.
-
-You will need to work through the following once:
-* [Initial Assumptions](https://github.com/iPlantCollaborativeOpenSource/iplant-agave-sdk/blob/master/docs/iplant-assumptions.md)
-* [Installing the SDK](https://github.com/iPlantCollaborativeOpenSource/iplant-agave-sdk/blob/master/docs/install-sdk.md)
-* [Client and key creation](https://github.com/iPlantCollaborativeOpenSource/iplant-agave-sdk/blob/master/docs/client-create.md)
-* [Obtain a token](https://github.com/iPlantCollaborativeOpenSource/iplant-agave-sdk/blob/master/docs/set-token.md)
-
-If done correctly, then for subsequent actively, you will only need to refresh your tokens using the following command:
-
-```sh
-auth-tokens-refresh -S
-```
-
-
-#### Step 1 - Preparing the reference bundle (coming soon)
-
-
-#### Step 2 - Creating bam files (coming soon)
-
-
-#### Step 3 - Running the pipeline (coming soon)
-
-
+* [Go back to README](../README.md)

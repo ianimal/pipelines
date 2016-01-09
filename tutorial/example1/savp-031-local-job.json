@@ -1,0 +1,28 @@
+{
+    "jobName": "savp-031-local",
+    "softwareName": "ianimal-savp-0.3.1u1",
+    "processorsPerNode": 12,
+    "requestedTime": "08:00:00",
+    "memoryPerNode": 24,
+    "nodeCount": 1,
+    "batchQueue": "normal",
+    "archive": false,
+    "archivePath": "YOUR-ARCHIVE-PATH",
+    "inputs": {
+        "inputBam": "https://agave.iplantc.org/jobs/v2/JOBID-BWA/outputs/media/SRR2601691.mem.bam",
+        "inputBamBai": "https://agave.iplantc.org/jobs/v2/JOBID-BWA/outputs/media/SRR2601691.mem.bam.bai",
+        "referenceBundle": "https://agave.iplantc.org/jobs/v2/JOBID-REFPREP/outputs/media/e-coli-K-12.tar",
+	    "knownVariants": "agave://data.iplantcollaborative.org/shared/iplant_training/savp_example_data/known.variants.vcf"
+    },
+    "parameters": {
+    	"regionName": "",
+    	"runUnifiedGenotyper": true,
+    	"runPlatypus": true,
+    	"runMpileup": false,
+    	"cleanupInputs": true,
+    	"cleanupIntermediates": true
+    },
+    "outputs": {
+    }
+}
+

@@ -1,0 +1,19 @@
+{
+    "jobName": "savp-refprep-030-local",
+    "softwareName": "ianimal-savp-refprep-0.3.0u1",
+    "processorsPerNode": 12,
+    "requestedTime": "08:00:00",
+    "memoryPerNode": 24,
+    "nodeCount": 1,
+    "batchQueue": "normal",
+    "archive": false,
+    "archivePath": "YOUR-ARCHIVE-PATH",
+    "inputs": {
+		"referenceFasta": "agave://data.iplantcollaborative.org/shared/iplant_training/savp_example_data/e-coli-K-12.fa"
+    },
+    "parameters": {
+    	"cleanupParameter": true
+    },
+    "outputs": {
+    }
+}

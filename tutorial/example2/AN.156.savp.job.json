@@ -1,0 +1,27 @@
+{
+"jobName": "vaughn-savp-030-01",
+"softwareName": "ianimal-savp-0.3.0u1",
+"processorsPerNode": 12,
+"requestedTime": "24:00:00",
+"memoryPerNode": 24,
+"nodeCount": 1,
+"batchQueue": "normal",
+"archive": true,
+"archivePath": "vaughn/ercfrtz/schnabel",
+"inputs": {
+"inputBam": "https://agave.iplantc.org/jobs/v2/JOBID/outputs/media/AN.156.bam",
+"inputBamBai": "https://agave.iplantc.org/jobs/v2/JOBID/outputs/media/AN.156.bam.bai",
+"referenceBundle": "agave://tacc-global.iplantcollaborative.org/ercfrtz/iastate-tacc-genomics/umd_3_1_Y_Mito.tar",
+"knownVariants": "agave://tacc-global.iplantcollaborative.org/ercfrtz/iastate-tacc-genomics/Bos_taurus.dbSNP.vcf"
+},
+"parameters": {
+"regionName": "",
+"runUnifiedGenotyper": true,
+"runPlatypus": false,
+"runMpileup": false,
+"cleanupInputs": true,
+"cleanupIntermediates": true
+},
+"outputs": {
+}
+}
