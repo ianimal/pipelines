@@ -104,7 +104,7 @@ jobs-submit -F savp-bwa-mem-030-local-job.json
 Copy the job ID reported back to you.  Subsequent steps refer to it as *JOBID-BWA* 
 
 
-#### Workflow example 1 part 2 - variant calling
+#### Workflow example 1 part 3 - variant calling
 
 Use the following json file for your job submission.  
 
