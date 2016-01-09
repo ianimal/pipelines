@@ -148,9 +148,6 @@ Launch the job will the following command:
 jobs-submit -F savp-031-local-job.json
 ```
 
-
-* [Go to command line workflow instructions example #2](../example2/tutorial_savp_commandline_workflow2.md)
-
 * [Go back to SAVP Discovery Environment tutorial](../tutorial_savp.md)
 
 * [Go back to SAVP README](../../README.md)
