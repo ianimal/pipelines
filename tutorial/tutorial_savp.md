@@ -20,7 +20,7 @@ Different parts of the SAVP require a reference fasta and associated files. As a
 
 In the **Apps** window under *Workspace* select *Single Animal Variant Pipeline Reference Preparation Step 0.3.0*.  This will open a window for the app. 
 
-Select **Inputs** and then select the **Browse** button on the right to open a navigation window.  From this window you can select a reference fasta you previously uploaded, or the sample file provided for this tutorial which is found by navigating into *Community Data* then *iplant_training* then *savp_example_data* and selecting *e-coli-K-12.fa*.  Select the *OK* button at the bottom of the window.  
+Select **Inputs** and then select the **Browse** button on the right to open a navigation window.  From this window you can select a reference fasta you previously uploaded, or the sample file provided for this tutorial which is found by navigating into *Community Data* then *iplant_training* then *savp_example_data* and selecting *e-coli-K-12.fa.gz*.  Select the *OK* button at the bottom of the window.  
 
 Now select the *Launch Analysis* button.  A new folder for the output of this analysis will be created after launching the analysis.  Unless you specified a different location, it will be found in */iplant/home/yourusername/analyses/* which you can browse to using your **Data** window.
 
