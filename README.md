@@ -11,10 +11,19 @@ Note also that the name iPlant is transitioning to be CyVerse.
 
 ### VERSION HISTORY
 
-#### Version 0.3.1: Releasing soon
+
+#### Version 0.4.0: Coming soon
 ---
-* Bug fixes
-* Calls modules in preferred fashion
+* Execution moved to Lonestar 5 supercomputer
+
+| Agave Application ID | Label |
+| -------------------- | ----- |
+| savp-refprep-0.4.0u2 | Single Animal Variant Pipeline Reference Preparation Step |
+
+#### Version 0.3.1: Released 01/07/2016
+---
+* Bug fixes in ianimal-savp
+* ianimal-savp calls modules in preferred fashion
 
 | Agave Application ID | Label |
 | -------------------- | ----- |
