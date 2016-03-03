@@ -1,0 +1,19 @@
+{
+    "jobName": "savp-refprep-040-01",
+    "softwareName": "jcarson-savp-refprep-0.4.0",
+    "processorsPerNode": 24,
+    "requestedTime": "00:30:00",
+    "memoryPerNode": 64,
+    "nodeCount": 1,
+    "batchQueue": "development",
+    "archive": false,
+    "archivePath": "",
+    "inputs": {
+		"referenceFasta": "agave://data.iplantcollaborative.org/shared/iplant_training/savp_example_data/e-coli-K-12.fa.gz"
+    },
+    "parameters": {
+    	"cleanupParameter": true
+    },
+    "outputs": {
+    }
+}
