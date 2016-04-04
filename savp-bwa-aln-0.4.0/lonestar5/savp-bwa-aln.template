@@ -25,27 +25,22 @@ reference=${ref}.fa
 dictionary=${ref}.dict
 
 # Fixed parameters
-n=11					# number of cores to use per function
+n=23					# number of cores to use per function
 
 ## MAIN FUNCTIONS
-
-module load jdk64
-module load picard
-module load samtools
-module load bwa/0.7.7
 
 ## Generate index for forward reads
 bwa aln -t ${n} ${reference} ${data_a} > aln_a.sai
 
 ## If the reads are not paired, simply run samse, otherwise build the sam index for the mates and align them with sampe
 if [ -z ${data_b} ]
-    then bwa samse ${reference} aln_a.sai ${data_a} | samtools view -bhS -@${n} - | samtools sort -@${n} - out_fasta_sorted
+    then bwa samse ${reference} aln_a.sai ${data_a} | samtools view -bhS -@${n} - | samtools sort -@${n} - -o out_fasta_sorted.bam
 else
     bwa aln -t ${n} ${reference} ${data_b} > aln_b.sai
-    bwa sampe ${reference} aln_a.sai aln_b.sai ${data_a} ${data_b} | samtools view -bhS -@${n} - | samtools sort -@${n} - out_fasta_sorted
+    bwa sampe ${reference} aln_a.sai aln_b.sai ${data_a} ${data_b} | samtools view -bhS -@${n} - | samtools sort -@${n} - -o out_fasta_sorted.bam
 fi
 
-java -Xmx12g -jar $TACC_PICARD_DIR/AddOrReplaceReadGroups.jar INPUT=out_fasta_sorted.bam OUTPUT=${barcode}.aln.bam RGLB=1 RGPL=illumina RGPU=all RGSM=${barcode} VALIDATION_STRINGENCY=SILENT
+java -Xmx32g -jar $TACC_PICARD_DIR/picard.jar AddOrReplaceReadGroups INPUT=out_fasta_sorted.bam OUTPUT=${barcode}.aln.bam RGLB=1 RGPL=illumina RGPU=all RGSM=${barcode} VALIDATION_STRINGENCY=SILENT
 
 samtools index ${barcode}.aln.bam
 

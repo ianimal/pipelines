@@ -19,6 +19,9 @@ Note also that the name iPlant is transitioning to be CyVerse.
 | Agave Application ID | Label |
 | -------------------- | ----- |
 | savp-refprep-0.4.0u2 | Single Animal Variant Pipeline Reference Preparation Step |
+| savp-bwa-aln-0.4.0u1 | Single Animal Variant Pipeline BWA ALN step |
+| savp-bwa-mem-0.4.0u1 | Single Animal Variant Pipeline BWA MEM step |
+
 
 #### Version 0.3.1: Released 01/07/2016
 ---

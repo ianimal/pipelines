@@ -1,0 +1,22 @@
+{
+    "jobName": "savp-bwa-mem-040-01",
+    "softwareName": "jcarson-savp-bwa-mem-0.4.0",
+    "processorsPerNode": 24,
+    "requestedTime": "00:10:00",
+    "memoryPerNode": 64,
+    "nodeCount": 1,
+    "batchQueue": "normal",
+    "archive": false,
+    "archivePath": "",
+    "inputs": {
+        "inputSequence1": "agave://data.iplantcollaborative.org/shared/iplant_training/savp_example_data/SRR2601691_1.fastq",
+        "inputSequence2": "agave://data.iplantcollaborative.org/shared/iplant_training/savp_example_data/SRR2601691_2.fastq",
+        "referenceBundle": "agave://data.iplantcollaborative.org/shared/iplant_training/savp_example_data/example_results/e-coli-K-12.tar"
+    },
+    "parameters": {
+        "inputBarcode": "SRR2601691",
+        "cleanupParameter": true
+    },
+    "outputs": {
+    }
+}

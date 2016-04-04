@@ -1,26 +1,30 @@
 #!/bin/bash
-#$ -V
-#$ -cwd # Start job in submission directory
-#$ -N test-savp_bwa_aln # Job Name
-#$ -o $JOB_NAME.o$JOB_ID        # Name of the output file (eg. myMPI.oJobID)
-#$ -pe 12way 12
-#$ -q development       # Queue name normal
-#$ -A iPlant-Collabs
-#$ -l h_rt=01:00:00     # Run time (hh:mm:ss) 
-#$ -M jcarson@tacc.utexas.edu   # Address for email notification
-#$ -m be        # Email at Begin and End of job
 
-module load jdk64
-module load picard
-module load samtools
-module load bwa/0.7.7
+#SBATCH -J test_savp-bwa-aln
+#SBATCH -o test_savp-bwa-aln.o%j
+#SBATCH -A iPlant-Collabs
+#SBATCH -p development
+#SBATCH -t 02:00:00
+#SBATCH -N 1
+#SBATCH -n 24
+
+#----
+# Script for creating tar bundle of reference fasta and its index files for savp pipeline
+# Creates index files
+# Bundles everything up
+# Note that format for samtools and picard has changed since last version
+#----
+
+module load bwa/0.7.12
+module load picard-tools/1.141
+module load samtools/1.3
 
 ## INPUTS
-data_a="HO.2081.AP.03.1_Unique.fastq.gz"
-data_b="HO.2081.AP.03.2_Unique.fastq.gz"
-barcode="HO.2081.AP.03"   # make the user input this, required string
-reference_bundle="umd_3_1_Y_Mito.tar"  
-cleanup=true
+data_a="SRR2601691_1.fastq"
+data_b="SRR2601691_2.fastq"
+barcode="SRR2601691"   # make the user input this, required string
+reference_bundle="e-coli-K-12.tar"  
+cleanup=false
 
 ## PRE-PROCESSING INPUTS
 
@@ -37,7 +41,7 @@ reference=${ref}.fa
 dictionary=${ref}.dict
 
 # number of cores to use per function
-n=11
+n=23
 
 ## MAIN FUNCTIONS
 
@@ -46,13 +50,13 @@ bwa aln -t ${n} ${reference} ${data_a} > aln_a.sai
 
 ## If the reads are not paired, simply run samse, otherwise build the sam index for the mates and align them with sampe
 if [ -z ${data_b} ]
-    then bwa samse ${reference} aln_a.sai ${data_a} | samtools view -bhS -@${n} - | samtools sort -@${n} - out_fasta_sorted
+    then bwa samse ${reference} aln_a.sai ${data_a} | samtools view -bhS -@${n} - | samtools sort -@${n} - -o out_fasta_sorted.bam
 else
     bwa aln -t ${n} ${reference} ${data_b} > aln_b.sai
-    bwa sampe ${reference} aln_a.sai aln_b.sai ${data_a} ${data_b} | samtools view -bhS -@${n} - | samtools sort -@${n} - out_fasta_sorted
+    bwa sampe ${reference} aln_a.sai aln_b.sai ${data_a} ${data_b} | samtools view -bhS -@${n} - | samtools sort -@${n} - -o out_fasta_sorted.bam
 fi
 
-java -Xmx12g -jar $TACC_PICARD_DIR/AddOrReplaceReadGroups.jar INPUT=out_fasta_sorted.bam OUTPUT=${barcode}.aln.bam RGLB=1 RGPL=illumina RGPU=all RGSM=${barcode} VALIDATION_STRINGENCY=SILENT
+java -Xmx32g -jar $TACC_PICARD_DIR/picard.jar AddOrReplaceReadGroups INPUT=out_fasta_sorted.bam OUTPUT=${barcode}.mem.bam RGLB=1 RGPL=illumina RGPU=all RGSM=${barcode} VALIDATION_STRINGENCY=SILENT
 
 samtools index ${barcode}.aln.bam
 
