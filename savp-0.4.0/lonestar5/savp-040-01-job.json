@@ -1,0 +1,27 @@
+{
+    "jobName": "savp-040-01",
+    "softwareName": "jcarson-savp-0.4.0",
+    "processorsPerNode": 24,
+    "requestedTime": "04:00:00",
+    "memoryPerNode": 64,
+    "nodeCount": 1,
+    "batchQueue": "normal",
+    "archive": false,
+    "archivePath": "",
+    "inputs": {
+        "inputBam": "agave://data.iplantcollaborative.org/shared/iplant_training/savp_example_data/example_results/SRR2601715.mem.bam",
+        "inputBamBai": "agave://data.iplantcollaborative.org/shared/iplant_training/savp_example_data/example_results/SRR2601715.mem.bam.bai",
+        "referenceBundle": "agave://data.iplantcollaborative.org/shared/iplant_training/savp_example_data/example_results/e-coli-K-12.tar",
+		"knownVariants": "agave://data.iplantcollaborative.org/shared/iplant_training/savp_example_data/known.variants.vcf"
+    },
+    "parameters": {
+    	"regionName": "",
+    	"runUnifiedGenotyper": true,
+    	"runPlatypus": true,
+    	"runMpileup": true,
+    	"cleanupInputs": true,
+    	"cleanupIntermediates": true
+    },
+    "outputs": {
+    }
+}

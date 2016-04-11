@@ -3,8 +3,8 @@
 #SBATCH -J test_savp
 #SBATCH -o test_savp.o%j
 #SBATCH -A iPlant-Collabs
-#SBATCH -p normal
-#SBATCH -t 47:59:00
+#SBATCH -p development
+#SBATCH -t 02:00:00
 #SBATCH -N 1
 #SBATCH -n 24
 
@@ -17,22 +17,25 @@
 # Testing mods for tacc systems:james carson (january 2015 - march 2016)
 #---------------------------------------------
 
+module load python/2.7.11
+module load gatk/3.5.0
+
 #--------------------------------------------
 # Inputs and parameters
 #--------------------------------------------
 
 # The bam file to analyze - required
 # Warning - .bam.bai file must also be in same directory
-FILE="BBRCANM000001208601.bam"
+FILE="SRR2601715.mem.bam"
 
 # The reference files - required
 # Warning - must be the same as used to create the bam
 # Warning - bundle must be have common base name as contents
 # Warning - contents must include .dict   .fa    .fa.fai    .fa.{amb, ann, bwt, pac, sa}
-reference_bundle="umd_3_1_Y_Mito.tar"  
+reference_bundle="e-coli-K-12.tar"  
 
 # Known variant vcf file - optional
-dbSNP_work="Bos_taurus.dbSNP.vcf"
+dbSNP_work="known.variants.vcf"
 if [ "${dbSNP_work}" = "" ]; then 
 	realign_dbsnp_arg=""
 	ug_dbsnp_arg=""
@@ -46,7 +49,7 @@ else
 fi
 
 # Region (aka location) - optional
-location="Chr8"
+location=""
 if [ "${location}" = "" ]; then 
 	gatk_region_arg=""
 	mpileup_region_arg=""
@@ -62,10 +65,10 @@ run_mpileup=true
 run_platypus=true
 
 cleanup_inputs=false
-cleanup_intermediates=false
+cleanup_intermediates=true
 
 # number of cores to use per function
-n=24
+n=44
 
 # memory per function
 m=48
@@ -100,35 +103,13 @@ dictionary=${ref}.dict
 
 tar -xvf bin.tgz
 
-ml use -a /home1/03078/cproctor/apps/modulefiles
-ml reset
-ml intel/16.0.109
-ml impi/5.1.1
-ml python/2.7.10
-ml java/jdk1.8.0_51
-
 JAVADIR=
-
-PICARD=/scratch/02570/jcarson/ianimal/bin/picard-tools-1.141/
-
-# $TACC_PICARD_DIR
-
-# module load gatk/3.1.1
-GATK=/scratch/02570/jcarson/ianimal/bin/
-
-# $TACC_GATK_DIR
-
-#module load samtools
-#SAMTOOLS=$PWD/bin/samtools/0.1.19
-#BCFTOOLS=$PWD/bin/samtools/0.1.19/bcftools
-
-SAMTOOLS=/scratch/02570/jcarson/ianimal/bin/samtools-1.2/
-BCFTOOLS=/scratch/02570/jcarson/ianimal/bin/bcftools-1.2/
-
-vcfutiXXX=vcfutXXX.pl 
-
-PLATYPUS=/scratch/02570/jcarson/ianimal/bin/Platypus_0.5.2/
-
+PICARD=./bin/picard-tools-1.141/
+GATK=$TACC_GATK_DIR
+SAMTOOLS=./bin/samtools-0.1.19/
+BCFTOOLS=./bin/samtools-0.1.19/bcftools/
+vcfutXXX=./bin/samtools-0.1.19/bcftools/vcfutXXX.pl 
+PLATYPUS=./bin/Platypus_0.5.2/
 
 #---------------------------------------------
 # FUNCTIONS
@@ -310,7 +291,5 @@ else
 	echo "Skipping intermediate file clean up"
 fi
 
-
-#rm -rf bin
+rm -rf bin
 #rm -rf bin.tgz
-

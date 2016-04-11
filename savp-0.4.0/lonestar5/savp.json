@@ -1,8 +1,8 @@
 {"available":true,
  "checkpointable":false,
- "defaultMemoryPerNode”:64,
+ "defaultMemoryPerNode":64,
  "defaultProcessorsPerNode":24,
- "defaultMaxRunTime":"47:59:00",
+ "defaultMaxRunTime":"24:00:00",
  "defaultNodeCount":1,
  "defaultQueue":"normal",
  "deploymentPath":"jcarson/applications/savp-0.4.0/lonestar5",
@@ -12,6 +12,7 @@
  "helpURI":"http://www.broadinstitute.org/gatk",
  "label": "Single Animal Variant Pipeline",
  "longDescription":"GATK realign and real, then up to 3 variant callers",
+ "modules":["load python/2.7.11", "load gatk/3.5.0"],
  "name":"jcarson-savp",
  "ontology":["http://sswapmeet.sswap.info/agave/apps/Application"],
  "parallelism":"SERIAL",
@@ -172,4 +173,4 @@
          "showArgument":false}}],
  "outputs":[]
  }
-
+ 
