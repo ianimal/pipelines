@@ -12,7 +12,7 @@ Note also that the name iPlant is transitioning to be CyVerse.
 ### VERSION HISTORY
 
 
-#### Version 0.4.0: Coming soon
+#### Version 0.4.0: Released 01/15/2016
 ---
 * Execution moved to Lonestar 5 supercomputer
 
@@ -21,6 +21,7 @@ Note also that the name iPlant is transitioning to be CyVerse.
 | savp-refprep-0.4.0u2 | Single Animal Variant Pipeline Reference Preparation Step |
 | savp-bwa-aln-0.4.0u1 | Single Animal Variant Pipeline BWA ALN step |
 | savp-bwa-mem-0.4.0u1 | Single Animal Variant Pipeline BWA MEM step |
+| savp-0.4.0u1 | Single Animal Variant Pipeline |
 
 
 #### Version 0.3.1: Released 01/07/2016
