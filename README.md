@@ -21,6 +21,7 @@ Note also that the name iPlant is transitioning to be CyVerse.
 | savp-refprep-0.4.0u2 | Single Animal Variant Pipeline Reference Preparation Step |
 | savp-bwa-aln-0.4.0u1 | Single Animal Variant Pipeline BWA ALN step |
 | savp-bwa-mem-0.4.0u1 | Single Animal Variant Pipeline BWA MEM step |
+| savp-merge-sams-0.4.0u1 | Single Animal Variant Pipeline merge SAM or BAM files |
 | savp-0.4.0u1 | Single Animal Variant Pipeline |
 
 
